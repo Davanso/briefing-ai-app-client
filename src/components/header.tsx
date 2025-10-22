@@ -1,12 +1,10 @@
-import { AppBar, Toolbar, Typography, IconButton, Box, Avatar, Badge, Tooltip } from '@mui/material';
+import { AppBar, Toolbar, Typography, IconButton, Box, Avatar, Tooltip } from '@mui/material';
 import { 
   Menu as MenuIcon, 
-  Notifications, 
   Settings,
   Help,
   Logout,
   Search,
-  LightMode
 } from '@mui/icons-material';
 
 interface HeaderProps {
@@ -105,46 +103,6 @@ export default function Header({ onMenuClick }: HeaderProps) {
               }}
             >
               <Search />
-            </IconButton>
-          </Tooltip>
-          
-          <Tooltip title="Tema claro" arrow>
-            <IconButton 
-              sx={{ 
-                color: '#64748b',
-                '&:hover': {
-                  backgroundColor: 'rgba(49, 251, 43, 0.08)',
-                  color: '#31fb2b',
-                }
-              }}
-            >
-              <LightMode />
-            </IconButton>
-          </Tooltip>
-          
-          <Tooltip title="Notificações" arrow>
-            <IconButton 
-              sx={{ 
-                color: '#64748b',
-                '&:hover': {
-                  backgroundColor: 'rgba(49, 251, 43, 0.08)',
-                  color: '#31fb2b',
-                }
-              }}
-            >
-              <Badge 
-                badgeContent={3} 
-                color="secondary"
-                sx={{
-                  '& .MuiBadge-badge': {
-                    backgroundColor: '#31fb2b',
-                    color: '#00213a',
-                    fontWeight: 600,
-                  }
-                }}
-              >
-                <Notifications />
-              </Badge>
             </IconButton>
           </Tooltip>
           

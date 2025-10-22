@@ -171,7 +171,7 @@ export default function BriefingSystem() {
             WebkitTextFillColor: 'transparent',
           }}
         >
-          Sistema de Briefing AI
+          Briefing AI
         </Typography>
         <Typography 
           variant="h6" 
@@ -192,6 +192,8 @@ export default function BriefingSystem() {
           borderRadius: 4,
           p: 2,
           mb: 4,
+          justifyContent: 'center',
+          display: 'flex',
         }}
       >
         <Tabs 
@@ -252,14 +254,17 @@ export default function BriefingSystem() {
       </Box>
 
       <TabPanel value={tabValue} index={0}>
-        <Box sx={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
-          <Box sx={{ flex: '1 1 400px', minWidth: '300px' }}>
+        <Box sx={{ display: 'flex', gap: 4, flexWrap: 'wrap', alignItems: 'stretch' }}>
+          <Box sx={{ flex: '1 1 400px', minWidth: '300px', display: 'flex' }}>
             <Card
               sx={{
                 background: 'linear-gradient(135deg, #ffffff 0%, #fafbfc 100%)',
                 border: '2px solid rgba(49, 251, 43, 0.2)',
                 position: 'relative',
                 overflow: 'visible',
+                height: '100%',
+                width: '100%',
+                minHeight: 250,
               }}
             >
               <Box
@@ -289,7 +294,7 @@ export default function BriefingSystem() {
                     placeholder="Nova palavra-chave"
                     value={newKeyword}
                     onChange={(e) => setNewKeyword(e.target.value)}
-                    onKeyPress={(e) => e.key === 'Enter' && handleAddKeyword()}
+                    onKeyDown={(e) => e.key === 'Enter' && handleAddKeyword()}
                     sx={{ flex: 1 }}
                   />
                   <Button 
@@ -331,13 +336,16 @@ export default function BriefingSystem() {
             </Card>
           </Box>
 
-          <Box sx={{ flex: '1 1 400px', minWidth: '300px' }}>
+          <Box sx={{ flex: '1 1 400px', minWidth: '300px', display: 'flex' }}>
             <Card
               sx={{
                 background: 'linear-gradient(135deg, #ffffff 0%, #fafbfc 100%)',
                 border: '2px solid rgba(0, 33, 58, 0.2)',
                 position: 'relative',
                 overflow: 'visible',
+                height: '100%',
+                width: '100%',
+                minHeight: 250,
               }}
             >
               <Box

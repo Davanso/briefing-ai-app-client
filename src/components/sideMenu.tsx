@@ -9,21 +9,15 @@ import {
   Box,
   Typography,
   Avatar,
-  LinearProgress,
   Chip,
   Stack,
 } from '@mui/material';
 import { 
   Dashboard,
   Article,
-  Search,
-  Settings,
-  TrendingUp,
-  NotificationImportant,
-  Instagram,
-  Analytics,
   Circle,
   Bolt,
+  Newspaper,
 } from '@mui/icons-material';
 
 interface SideMenuProps {
@@ -43,12 +37,12 @@ const menuItems = [
     color: '#31fb2b',
     badge: null,
   },
-  { 
-    id: 'monitoring', 
-    label: 'Monitoramento', 
-    icon: <Search />, 
-    color: '#3b82f6',
-    badge: 'Ativo',
+    { 
+    id: 'noticias', 
+    label: 'Notícias', 
+    icon: <Newspaper />, 
+    color: '#f59e0b',
+    badge: '2',
   },
   { 
     id: 'briefings', 
@@ -56,41 +50,6 @@ const menuItems = [
     icon: <Article />, 
     color: '#8b5cf6',
     badge: '12',
-  },
-  { 
-    id: 'trends', 
-    label: 'Tendências', 
-    icon: <TrendingUp />, 
-    color: '#f59e0b',
-    badge: null,
-  },
-  { 
-    id: 'instagram', 
-    label: 'Conteúdo Instagram', 
-    icon: <Instagram />, 
-    color: '#e91e63',
-    badge: 'Novo',
-  },
-  { 
-    id: 'analytics', 
-    label: 'Analytics', 
-    icon: <Analytics />, 
-    color: '#06b6d4',
-    badge: null,
-  },
-  { 
-    id: 'alerts', 
-    label: 'Alertas', 
-    icon: <NotificationImportant />, 
-    color: '#ef4444',
-    badge: '3',
-  },
-  { 
-    id: 'settings', 
-    label: 'Configurações', 
-    icon: <Settings />, 
-    color: '#64748b',
-    badge: null,
   },
 ];
 
@@ -136,41 +95,6 @@ export default function SideMenu({ open, onClose, selectedSection, onSectionChan
               </Typography>
             </Box>
           </Box>
-          
-          <Box sx={{ mb: 2 }}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-              <Typography variant="caption" sx={{ color: '#64748b' }}>
-                Uso do plano
-              </Typography>
-              <Typography variant="caption" sx={{ color: '#31fb2b', fontWeight: 600 }}>
-                75%
-              </Typography>
-            </Box>
-            <LinearProgress
-              variant="determinate"
-              value={75}
-              sx={{
-                height: 6,
-                borderRadius: 3,
-                backgroundColor: '#e2e8f0',
-                '& .MuiLinearProgress-bar': {
-                  backgroundColor: '#31fb2b',
-                  borderRadius: 3,
-                },
-              }}
-            />
-          </Box>
-          
-          <Chip
-            label="Plano Pro"
-            size="small"
-            sx={{
-              backgroundColor: 'rgba(49, 251, 43, 0.12)',
-              color: '#00213a',
-              fontWeight: 600,
-              border: '1px solid rgba(49, 251, 43, 0.3)',
-            }}
-          />
         </Box>
         
         {/* Navigation Menu */}
