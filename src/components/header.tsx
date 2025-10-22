@@ -6,12 +6,26 @@ import {
   Logout,
   Search,
 } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 
 interface HeaderProps {
   onMenuClick: () => void;
 }
 
 export default function Header({ onMenuClick }: HeaderProps) {
+  const navigate = useNavigate();
+  const { user, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
+  const handleSettings = () => {
+    navigate('/settings');
+  };
+
   return (
     <AppBar 
       position="fixed" 
@@ -51,7 +65,9 @@ export default function Header({ onMenuClick }: HeaderProps) {
               alignItems: 'center',
               justifyContent: 'center',
               mr: 2,
+              cursor: 'pointer',
             }}
+            onClick={() => navigate('/dashboard')}
           >
             <Typography
               variant="h6"
@@ -65,7 +81,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
             </Typography>
           </Box>
           
-          <Box>
+          <Box sx={{ cursor: 'pointer' }} onClick={() => navigate('/dashboard')}>
             <Typography 
               variant="h6" 
               component="div" 
@@ -122,6 +138,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
           
           <Tooltip title="Configurações" arrow>
             <IconButton 
+              onClick={handleSettings}
               sx={{ 
                 color: '#64748b',
                 '&:hover': {
@@ -135,9 +152,10 @@ export default function Header({ onMenuClick }: HeaderProps) {
           </Tooltip>
           
           <Box sx={{ ml: 1, pl: 1, borderLeft: '1px solid #e2e8f0' }}>
-            <Tooltip title="Perfil do usuário" arrow>
+            <Tooltip title={`Perfil: ${user?.name || 'Usuário'}`} arrow>
               <IconButton sx={{ p: 0 }}>
                 <Avatar
+                  src={user?.avatar}
                   sx={{
                     width: 36,
                     height: 36,
@@ -146,7 +164,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
                     fontWeight: 600,
                   }}
                 >
-                  U
+                  {user?.name?.charAt(0)?.toUpperCase() || 'U'}
                 </Avatar>
               </IconButton>
             </Tooltip>
@@ -154,6 +172,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
           
           <Tooltip title="Sair" arrow>
             <IconButton 
+              onClick={handleLogout}
               sx={{ 
                 color: '#64748b',
                 ml: 1,

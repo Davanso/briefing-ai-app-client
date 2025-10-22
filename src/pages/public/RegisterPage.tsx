@@ -21,6 +21,7 @@ import {
   VisibilityOff,
   Email,
   Lock,
+  Person,
   Google,
   LinkedIn,
   AutoAwesome,
@@ -30,37 +31,62 @@ import {
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 
-export default function Login() {
+export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { register } = useAuth();
 
-  const handleLogin = async () => {
+  const handleRegister = async () => {
     setIsLoading(true);
     setError('');
-    
-    if (!email || !password) {
+
+    if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
       setError('Por favor, preencha todos os campos');
       setIsLoading(false);
       return;
     }
 
+    if (formData.password !== formData.confirmPassword) {
+      setError('As senhas não coincidem');
+      setIsLoading(false);
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      setError('A senha deve ter pelo menos 6 caracteres');
+      setIsLoading(false);
+      return;
+    }
+
     try {
-      await login(email, password);
+      await register(formData.email, formData.password, formData.name);
       navigate('/dashboard');
     } catch (err) {
-      setError('Email ou senha inválidos');
+      setError('Erro ao criar conta. Tente novamente.');
     } finally {
       setIsLoading(false);
     }
   };
 
+  const handleInputChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [field]: e.target.value });
+  };
+
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleClickShowConfirmPassword = () => {
+    setShowConfirmPassword(!showConfirmPassword);
   };
 
   return (
@@ -141,7 +167,7 @@ export default function Login() {
                   lineHeight: 1.4,
                 }}
               >
-                Sistema Inteligente de Monitoramento de Notícias e Geração de Briefings para Instagram
+                Junte-se à revolução dos briefings inteligentes
               </Typography>
 
               <Stack spacing={3} sx={{ mb: 4 }}>
@@ -194,7 +220,7 @@ export default function Login() {
             </Box>
           </Fade>
 
-          {/* Right side - Login Form */}
+          {/* Right side - Register Form */}
           <Zoom in timeout={1200}>
             <Card
               sx={{
@@ -216,7 +242,7 @@ export default function Login() {
                     fontWeight: 700,
                   }}
                 >
-                  Bem-vindo!
+                  Criar Conta
                 </Typography>
                 <Typography
                   variant="body2"
@@ -226,7 +252,7 @@ export default function Login() {
                     color: '#64748b',
                   }}
                 >
-                  Faça login para acessar sua dashboard
+                  Comece sua jornada com briefings inteligentes
                 </Typography>
 
                 {error && (
@@ -238,10 +264,25 @@ export default function Login() {
                 <Stack spacing={3}>
                   <TextField
                     fullWidth
+                    label="Nome completo"
+                    value={formData.name}
+                    onChange={handleInputChange('name')}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <Person sx={{ color: '#64748b' }} />
+                        </InputAdornment>
+                      ),
+                    }}
+                    placeholder="Seu nome completo"
+                  />
+
+                  <TextField
+                    fullWidth
                     label="Email"
                     type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={formData.email}
+                    onChange={handleInputChange('email')}
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
@@ -256,8 +297,8 @@ export default function Login() {
                     fullWidth
                     label="Senha"
                     type={showPassword ? 'text' : 'password'}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    value={formData.password}
+                    onChange={handleInputChange('password')}
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
@@ -279,28 +320,38 @@ export default function Login() {
                     placeholder="••••••••"
                   />
 
-                  <Box sx={{ textAlign: 'right' }}>
-                    <Link
-                      href="#"
-                      variant="body2"
-                      sx={{
-                        color: '#31fb2b',
-                        textDecoration: 'none',
-                        fontWeight: 500,
-                        '&:hover': {
-                          textDecoration: 'underline',
-                        },
-                      }}
-                    >
-                      Esqueceu sua senha?
-                    </Link>
-                  </Box>
+                  <TextField
+                    fullWidth
+                    label="Confirmar senha"
+                    type={showConfirmPassword ? 'text' : 'password'}
+                    value={formData.confirmPassword}
+                    onChange={handleInputChange('confirmPassword')}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <Lock sx={{ color: '#64748b' }} />
+                        </InputAdornment>
+                      ),
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle confirm password visibility"
+                            onClick={handleClickShowConfirmPassword}
+                            edge="end"
+                          >
+                            {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                    placeholder="••••••••"
+                  />
 
                   <Button
                     fullWidth
                     variant="contained"
                     size="large"
-                    onClick={handleLogin}
+                    onClick={handleRegister}
                     disabled={isLoading}
                     sx={{
                       py: 2,
@@ -313,7 +364,7 @@ export default function Login() {
                       fontWeight: 600,
                     }}
                   >
-                    {isLoading ? 'Entrando...' : 'Entrar'}
+                    {isLoading ? 'Criando conta...' : 'Criar Conta'}
                   </Button>
 
                   <Divider sx={{ my: 2 }}>
@@ -365,10 +416,10 @@ export default function Login() {
                       mt: 3,
                     }}
                   >
-                    Não tem uma conta?{' '}
+                    Já tem uma conta?{' '}
                     <Link
                       component={RouterLink}
-                      to="/register"
+                      to="/login"
                       sx={{
                         color: '#31fb2b',
                         textDecoration: 'none',
@@ -378,7 +429,7 @@ export default function Login() {
                         },
                       }}
                     >
-                      Cadastre-se gratuitamente
+                      Faça login
                     </Link>
                   </Typography>
                 </Stack>

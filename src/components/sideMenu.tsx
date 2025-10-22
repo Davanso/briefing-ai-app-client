@@ -18,13 +18,15 @@ import {
   Circle,
   Bolt,
   Newspaper,
+  Settings,
+  Assessment,
 } from '@mui/icons-material';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 
 interface SideMenuProps {
   open: boolean;
   onClose: () => void;
-  selectedSection: string;
-  onSectionChange: (section: string) => void;
 }
 
 const drawerWidth = 280;
@@ -36,13 +38,15 @@ const menuItems = [
     icon: <Dashboard />, 
     color: '#31fb2b',
     badge: null,
+    path: '/dashboard',
   },
-    { 
+  { 
     id: 'noticias', 
     label: 'Notícias', 
     icon: <Newspaper />, 
     color: '#f59e0b',
     badge: '2',
+    path: '/news',
   },
   { 
     id: 'briefings', 
@@ -50,10 +54,36 @@ const menuItems = [
     icon: <Article />, 
     color: '#8b5cf6',
     badge: '12',
+    path: '/briefings',
+  },
+  { 
+    id: 'reports', 
+    label: 'Relatórios', 
+    icon: <Assessment />, 
+    color: '#3b82f6',
+    badge: null,
+    path: '/reports',
+  },
+  { 
+    id: 'settings', 
+    label: 'Configurações', 
+    icon: <Settings />, 
+    color: '#64748b',
+    badge: null,
+    path: '/settings',
   },
 ];
 
-export default function SideMenu({ open, onClose, selectedSection, onSectionChange }: SideMenuProps) {
+export default function SideMenu({ open, onClose }: SideMenuProps) {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { user } = useAuth();
+
+  const handleNavigation = (path: string) => {
+    navigate(path);
+    onClose();
+  };
+
   return (
     <Drawer
       variant="temporary"
@@ -76,6 +106,7 @@ export default function SideMenu({ open, onClose, selectedSection, onSectionChan
         <Box sx={{ p: 3, borderBottom: '1px solid #e2e8f0' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
             <Avatar
+              src={user?.avatar}
               sx={{
                 width: 48,
                 height: 48,
@@ -84,14 +115,14 @@ export default function SideMenu({ open, onClose, selectedSection, onSectionChan
                 fontWeight: 700,
               }}
             >
-              U
+              {user?.name?.charAt(0)?.toUpperCase() || 'U'}
             </Avatar>
             <Box sx={{ flex: 1 }}>
               <Typography variant="subtitle1" sx={{ fontWeight: 600, color: '#00213a' }}>
-                Usuário Admin
+                {user?.name || 'Usuário'}
               </Typography>
               <Typography variant="caption" sx={{ color: '#64748b' }}>
-                admin@briefingai.com
+                {user?.email || 'user@briefingai.com'}
               </Typography>
             </Box>
           </Box>
@@ -114,77 +145,77 @@ export default function SideMenu({ open, onClose, selectedSection, onSectionChan
           </Box>
           
           <List sx={{ px: 2 }}>
-            {menuItems.map((item) => (
-              <ListItem key={item.id} disablePadding sx={{ mb: 0.5 }}>
-                <ListItemButton
-                  selected={selectedSection === item.id}
-                  onClick={() => {
-                    onSectionChange(item.id);
-                    onClose();
-                  }}
-                  sx={{
-                    borderRadius: 3,
-                    py: 1.5,
-                    '&.Mui-selected': {
-                      backgroundColor: 'rgba(49, 251, 43, 0.12)',
-                      border: '1px solid rgba(49, 251, 43, 0.3)',
+            {menuItems.map((item) => {
+              const isSelected = location.pathname === item.path;
+              return (
+                <ListItem key={item.id} disablePadding sx={{ mb: 0.5 }}>
+                  <ListItemButton
+                    selected={isSelected}
+                    onClick={() => handleNavigation(item.path)}
+                    sx={{
+                      borderRadius: 3,
+                      py: 1.5,
+                      '&.Mui-selected': {
+                        backgroundColor: 'rgba(49, 251, 43, 0.12)',
+                        border: '1px solid rgba(49, 251, 43, 0.3)',
+                        '&:hover': {
+                          backgroundColor: 'rgba(49, 251, 43, 0.16)',
+                        },
+                        '& .MuiListItemIcon-root': {
+                          color: '#31fb2b',
+                        },
+                        '& .MuiListItemText-primary': {
+                          color: '#00213a',
+                          fontWeight: 600,
+                        },
+                      },
                       '&:hover': {
-                        backgroundColor: 'rgba(49, 251, 43, 0.16)',
+                        backgroundColor: 'rgba(0, 33, 58, 0.04)',
                       },
-                      '& .MuiListItemIcon-root': {
-                        color: '#31fb2b',
-                      },
-                      '& .MuiListItemText-primary': {
-                        color: '#00213a',
-                        fontWeight: 600,
-                      },
-                    },
-                    '&:hover': {
-                      backgroundColor: 'rgba(0, 33, 58, 0.04)',
-                    },
-                  }}
-                >
-                  <ListItemIcon 
-                    sx={{ 
-                      color: selectedSection === item.id ? '#31fb2b' : item.color,
-                      minWidth: 40,
                     }}
                   >
-                    {item.icon}
-                  </ListItemIcon>
-                  <ListItemText 
-                    primary={item.label}
-                    primaryTypographyProps={{
-                      fontWeight: selectedSection === item.id ? 600 : 500,
-                      fontSize: '0.875rem',
-                      color: selectedSection === item.id ? '#00213a' : '#64748b',
-                    }}
-                  />
-                  {item.badge && (
-                    <Chip
-                      label={item.badge}
-                      size="small"
-                      sx={{
-                        height: 20,
-                        fontSize: '0.625rem',
-                        fontWeight: 600,
-                        backgroundColor: item.badge === 'Ativo' ? 'rgba(49, 251, 43, 0.12)' : 
-                                       item.badge === 'Novo' ? 'rgba(59, 130, 246, 0.12)' : 
-                                       'rgba(100, 116, 139, 0.12)',
-                        color: item.badge === 'Ativo' ? '#31fb2b' : 
-                               item.badge === 'Novo' ? '#3b82f6' : 
-                               '#64748b',
-                        border: `1px solid ${
-                          item.badge === 'Ativo' ? 'rgba(49, 251, 43, 0.3)' : 
-                          item.badge === 'Novo' ? 'rgba(59, 130, 246, 0.3)' : 
-                          'rgba(100, 116, 139, 0.3)'
-                        }`,
+                    <ListItemIcon 
+                      sx={{ 
+                        color: isSelected ? '#31fb2b' : item.color,
+                        minWidth: 40,
+                      }}
+                    >
+                      {item.icon}
+                    </ListItemIcon>
+                    <ListItemText 
+                      primary={item.label}
+                      primaryTypographyProps={{
+                        fontWeight: isSelected ? 600 : 500,
+                        fontSize: '0.875rem',
+                        color: isSelected ? '#00213a' : '#64748b',
                       }}
                     />
-                  )}
-                </ListItemButton>
-              </ListItem>
-            ))}
+                    {item.badge && (
+                      <Chip
+                        label={item.badge}
+                        size="small"
+                        sx={{
+                          height: 20,
+                          fontSize: '0.625rem',
+                          fontWeight: 600,
+                          backgroundColor: item.badge === 'Ativo' ? 'rgba(49, 251, 43, 0.12)' : 
+                                         item.badge === 'Novo' ? 'rgba(59, 130, 246, 0.12)' : 
+                                         'rgba(100, 116, 139, 0.12)',
+                          color: item.badge === 'Ativo' ? '#31fb2b' : 
+                                 item.badge === 'Novo' ? '#3b82f6' : 
+                                 '#64748b',
+                          border: `1px solid ${
+                            item.badge === 'Ativo' ? 'rgba(49, 251, 43, 0.3)' : 
+                            item.badge === 'Novo' ? 'rgba(59, 130, 246, 0.3)' : 
+                            'rgba(100, 116, 139, 0.3)'
+                          }`,
+                        }}
+                      />
+                    )}
+                  </ListItemButton>
+                </ListItem>
+              );
+            })}
           </List>
         </Box>
         
