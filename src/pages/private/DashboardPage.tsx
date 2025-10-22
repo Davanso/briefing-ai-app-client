@@ -68,34 +68,59 @@ export default function DashboardPage() {
       // Simulate API call for briefing generation
       await new Promise(resolve => setTimeout(resolve, 3000));
       
-      // Mock generated briefing
-      const mockBriefing = `# Briefing Automatizado
+      // Mock generated briefing for Instagram
+      const mockBriefing = `🚀 BRIEFING TECH | ${new Date().toLocaleDateString('pt-BR')}
 
-## Resumo Executivo
-Com base nos ${validLinks.length} links fornecidos, aqui está um resumo das principais tendências e insights identificados:
+💡 O QUE ESTÁ BOMBANDO NO MUNDO TECH?
 
-## Principais Tópicos Identificados
-• **Inteligência Artificial**: Avanços significativos em modelos de linguagem e automação
-• **Tecnologia Empresarial**: Novas soluções para produtividade e colaboração
-• **Tendências de Mercado**: Mudanças no comportamento do consumidor digital
+🔥 TENDÊNCIAS QUE VOCÊ PRECISA SABER:
 
-## Insights Chave
-1. **Crescimento da IA Generativa**: O mercado continua expandindo com novas aplicações práticas
-2. **Transformação Digital**: Empresas aceleram adoção de tecnologias emergentes  
-3. **Experiência do Usuário**: Foco crescente em interfaces intuitivas e personalizadas
+✨ IA GENERATIVA em alta!
+→ Novas ferramentas revolucionando o mercado
+→ Automação chegando em TODOS os setores
+→ Oportunidades INFINITAS para quem souber usar
 
-## Recomendações
-- Acompanhar desenvolvimentos em IA para oportunidades de implementação
-- Considerar investimentos em automação de processos
-- Manter-se atualizado sobre mudanças regulatórias no setor tech
+📱 TRANSFORMAÇÃO DIGITAL acelerada
+→ Empresas investindo PESADO em tech
+→ Remote work virou realidade permanente
+→ Cloud computing dominando tudo
 
-## Próximos Passos
-- Monitorar fontes identificadas para atualizações contínuas
-- Analisar impacto potencial nas operações atuais
-- Preparar estratégias de adaptação às tendências emergentes
+🎯 EXPERIÊNCIA DO USUÁRIO em foco
+→ Interfaces cada vez mais intuitivas
+→ Personalização é a palavra de ordem
+→ UX/UI designers são os novos rockstars
 
----
-*Briefing gerado automaticamente em ${new Date().toLocaleDateString('pt-BR')} às ${new Date().toLocaleTimeString('pt-BR')}*`;
+💰 OPORTUNIDADES DE INVESTIMENTO:
+• Startups de IA → 📈 Crescimento exponencial
+• EdTech → 🎓 Educação do futuro
+• FinTech → 💳 Revolução financeira
+• HealthTech → 🏥 Saúde 4.0
+
+⚡ DICA DE OURO:
+"Quem não se adapta à tecnologia, fica para trás. O futuro é AGORA!"
+
+🎯 PRÓXIMOS PASSOS:
+✅ Acompanhe as tendências
+✅ Invista em capacitação
+✅ Teste novas ferramentas
+✅ Network com especialistas
+
+📊 DADOS QUE IMPRESSIONAM:
+• 85% das empresas vão usar IA até 2025
+• Mercado tech cresce 15% ao ano
+• 2.4 bilhões de pessoas usam redes sociais
+
+👀 FIQUE DE OLHO EM:
+→ ChatGPT e concorrentes
+→ Realidade Virtual/Aumentada
+→ Blockchain além das cryptos
+→ Computação quântica
+
+💬 O que você acha dessas tendências? Comenta aí!
+
+#TechTrends #IA #InovaçãoTech #FuturoDigital #TransformaçãoDigital #Tecnologia2024 #StartupLife #DigitalMarketing #TechNews #Inovação #Empreendedorismo #TechBrasil #FinTech #EdTech #HealthTech #UXDesign #CloudComputing #Automação #InteligênciaArtificial #RedesSociais
+
+🔗 Salva esse post e compartilha com quem precisa saber!`;
       
       setGeneratedBriefing(mockBriefing);
     } catch (err) {
@@ -111,9 +136,9 @@ Com base nos ${validLinks.length} links fornecidos, aqui está um resumo das pri
 
   const downloadBriefing = () => {
     const element = document.createElement('a');
-    const file = new Blob([generatedBriefing], { type: 'text/markdown' });
+    const file = new Blob([generatedBriefing], { type: 'text/plain' });
     element.href = URL.createObjectURL(file);
-    element.download = `briefing-${new Date().toISOString().split('T')[0]}.md`;
+    element.download = `briefing-${new Date().toISOString().split('T')[0]}.txt`;
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);
