@@ -55,32 +55,6 @@ export default function Header({ onMenuClick }: HeaderProps) {
         </IconButton>
         
         <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
-          <Box
-            sx={{
-              width: 40,
-              height: 40,
-              borderRadius: 2,
-              background: 'linear-gradient(135deg, #00213a 0%, #31fb2b 100%)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              mr: 2,
-              cursor: 'pointer',
-            }}
-            onClick={() => navigate('/dashboard')}
-          >
-            <Typography
-              variant="h6"
-              sx={{
-                color: 'white',
-                fontWeight: 800,
-                fontSize: '1.2rem',
-              }}
-            >
-              B
-            </Typography>
-          </Box>
-          
           <Box sx={{ cursor: 'pointer' }} onClick={() => navigate('/dashboard')}>
             <Typography 
               variant="h6" 
