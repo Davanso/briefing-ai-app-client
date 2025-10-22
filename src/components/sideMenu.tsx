@@ -19,7 +19,7 @@ import {
   Bolt,
   Newspaper,
   Settings,
-  Assessment,
+  // Assessment,
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
@@ -56,14 +56,14 @@ const menuItems = [
     badge: '12',
     path: '/briefings',
   },
-  { 
-    id: 'reports', 
-    label: 'Relatórios', 
-    icon: <Assessment />, 
-    color: '#3b82f6',
-    badge: null,
-    path: '/reports',
-  },
+  // { 
+  //   id: 'reports', 
+  //   label: 'Relatórios', 
+  //   icon: <Assessment />, 
+  //   color: '#3b82f6',
+  //   badge: null,
+  //   path: '/reports',
+  // },
   { 
     id: 'settings', 
     label: 'Configurações', 

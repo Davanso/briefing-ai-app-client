@@ -11,7 +11,7 @@ import RegisterPage from '../pages/public/RegisterPage';
 import DashboardPage from '../pages/private/DashboardPage';
 import BriefingsPage from '../pages/private/BriefingsPage';
 import NewsPage from '../pages/private/NewsPage';
-import ReportsPage from '../pages/private/ReportsPage';
+// import ReportsPage from '../pages/private/ReportsPage';
 import SettingsPage from '../pages/private/SettingsPage';
 
 export const router = createBrowserRouter([
@@ -58,10 +58,10 @@ export const router = createBrowserRouter([
         path: 'news',
         element: <NewsPage />,
       },
-      {
-        path: 'reports',
-        element: <ReportsPage />,
-      },
+    //   {
+    //     path: 'reports',
+    //     element: <ReportsPage />,
+    //   },
       {
         path: 'settings',
         element: <SettingsPage />,
