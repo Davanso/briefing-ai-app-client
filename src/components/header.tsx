@@ -1,0 +1,215 @@
+import { AppBar, Toolbar, Typography, IconButton, Box, Avatar, Badge, Tooltip } from '@mui/material';
+import { 
+  Menu as MenuIcon, 
+  Notifications, 
+  Settings,
+  Help,
+  Logout,
+  Search,
+  LightMode
+} from '@mui/icons-material';
+
+interface HeaderProps {
+  onMenuClick: () => void;
+}
+
+export default function Header({ onMenuClick }: HeaderProps) {
+  return (
+    <AppBar 
+      position="fixed" 
+      elevation={0}
+      sx={{ 
+        zIndex: (theme) => theme.zIndex.drawer + 1,
+        backgroundColor: '#ffffff',
+        backdropFilter: 'blur(20px)',
+        borderBottom: '1px solid rgba(226, 232, 240, 0.8)',
+      }}
+    >
+      <Toolbar sx={{ py: 1 }}>
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          onClick={onMenuClick}
+          edge="start"
+          sx={{ 
+            mr: 2,
+            color: '#00213a',
+            '&:hover': {
+              backgroundColor: 'rgba(49, 251, 43, 0.08)',
+            }
+          }}
+        >
+          <MenuIcon />
+        </IconButton>
+        
+        <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
+          <Box
+            sx={{
+              width: 40,
+              height: 40,
+              borderRadius: 2,
+              background: 'linear-gradient(135deg, #00213a 0%, #31fb2b 100%)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              mr: 2,
+            }}
+          >
+            <Typography
+              variant="h6"
+              sx={{
+                color: 'white',
+                fontWeight: 800,
+                fontSize: '1.2rem',
+              }}
+            >
+              B
+            </Typography>
+          </Box>
+          
+          <Box>
+            <Typography 
+              variant="h6" 
+              component="div" 
+              sx={{ 
+                fontWeight: 700,
+                color: '#00213a',
+                fontSize: '1.25rem',
+                lineHeight: 1,
+              }}
+            >
+              Briefing AI
+            </Typography>
+            <Typography 
+              variant="caption" 
+              sx={{ 
+                color: '#64748b',
+                fontSize: '0.75rem',
+                fontWeight: 500,
+              }}
+            >
+              Sistema de Monitoramento Inteligente
+            </Typography>
+          </Box>
+        </Box>
+        
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Tooltip title="Pesquisar" arrow>
+            <IconButton 
+              sx={{ 
+                color: '#64748b',
+                '&:hover': {
+                  backgroundColor: 'rgba(49, 251, 43, 0.08)',
+                  color: '#31fb2b',
+                }
+              }}
+            >
+              <Search />
+            </IconButton>
+          </Tooltip>
+          
+          <Tooltip title="Tema claro" arrow>
+            <IconButton 
+              sx={{ 
+                color: '#64748b',
+                '&:hover': {
+                  backgroundColor: 'rgba(49, 251, 43, 0.08)',
+                  color: '#31fb2b',
+                }
+              }}
+            >
+              <LightMode />
+            </IconButton>
+          </Tooltip>
+          
+          <Tooltip title="Notificações" arrow>
+            <IconButton 
+              sx={{ 
+                color: '#64748b',
+                '&:hover': {
+                  backgroundColor: 'rgba(49, 251, 43, 0.08)',
+                  color: '#31fb2b',
+                }
+              }}
+            >
+              <Badge 
+                badgeContent={3} 
+                color="secondary"
+                sx={{
+                  '& .MuiBadge-badge': {
+                    backgroundColor: '#31fb2b',
+                    color: '#00213a',
+                    fontWeight: 600,
+                  }
+                }}
+              >
+                <Notifications />
+              </Badge>
+            </IconButton>
+          </Tooltip>
+          
+          <Tooltip title="Ajuda" arrow>
+            <IconButton 
+              sx={{ 
+                color: '#64748b',
+                '&:hover': {
+                  backgroundColor: 'rgba(49, 251, 43, 0.08)',
+                  color: '#31fb2b',
+                }
+              }}
+            >
+              <Help />
+            </IconButton>
+          </Tooltip>
+          
+          <Tooltip title="Configurações" arrow>
+            <IconButton 
+              sx={{ 
+                color: '#64748b',
+                '&:hover': {
+                  backgroundColor: 'rgba(49, 251, 43, 0.08)',
+                  color: '#31fb2b',
+                }
+              }}
+            >
+              <Settings />
+            </IconButton>
+          </Tooltip>
+          
+          <Box sx={{ ml: 1, pl: 1, borderLeft: '1px solid #e2e8f0' }}>
+            <Tooltip title="Perfil do usuário" arrow>
+              <IconButton sx={{ p: 0 }}>
+                <Avatar
+                  sx={{
+                    width: 36,
+                    height: 36,
+                    background: 'linear-gradient(135deg, #00213a 0%, #31fb2b 100%)',
+                    fontSize: '0.875rem',
+                    fontWeight: 600,
+                  }}
+                >
+                  U
+                </Avatar>
+              </IconButton>
+            </Tooltip>
+          </Box>
+          
+          <Tooltip title="Sair" arrow>
+            <IconButton 
+              sx={{ 
+                color: '#64748b',
+                ml: 1,
+                '&:hover': {
+                  backgroundColor: 'rgba(239, 68, 68, 0.08)',
+                  color: '#ef4444',
+                }
+              }}
+            >
+              <Logout />
+            </IconButton>
+          </Tooltip>
+        </Box>
+      </Toolbar>
+    </AppBar>
+  );
+}
