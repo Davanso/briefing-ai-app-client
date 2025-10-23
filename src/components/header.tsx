@@ -2,7 +2,6 @@ import { AppBar, Toolbar, Typography, IconButton, Box, Avatar, Tooltip } from '@
 import { 
   Menu as MenuIcon, 
   Settings,
-  Help,
   Logout,
   Search,
 } from '@mui/icons-material';
@@ -81,35 +80,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
           </Box>
         </Box>
         
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <Tooltip title="Pesquisar" arrow>
-            <IconButton 
-              sx={{ 
-                color: '#64748b',
-                '&:hover': {
-                  backgroundColor: 'rgba(49, 251, 43, 0.08)',
-                  color: '#31fb2b',
-                }
-              }}
-            >
-              <Search />
-            </IconButton>
-          </Tooltip>
-          
-          <Tooltip title="Ajuda" arrow>
-            <IconButton 
-              sx={{ 
-                color: '#64748b',
-                '&:hover': {
-                  backgroundColor: 'rgba(49, 251, 43, 0.08)',
-                  color: '#31fb2b',
-                }
-              }}
-            >
-              <Help />
-            </IconButton>
-          </Tooltip>
-          
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>     
           <Tooltip title="Configurações" arrow>
             <IconButton 
               onClick={handleSettings}
